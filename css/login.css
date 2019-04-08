@@ -30,8 +30,8 @@ body{
 }
 
 #button2{
-	background-color: rgb(255,0,0);
-	border:1px rgb(255,0,0);
+	background-color: #0074E2;
+	border:1px #0074E2;
 }
 
 #button2:hover{
