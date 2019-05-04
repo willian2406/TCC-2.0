@@ -158,8 +158,8 @@ p{
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-//Institucional
-
-navInstitu {
-    background-color: #282828;
+@media (max-width: 768px) {
+  .content2{
+    padding-right: 50px;
+  }
 }
