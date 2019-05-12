@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 
 <head>
@@ -9,6 +9,7 @@
     <title>DogSafer - Rastreador GPS para cães</title>
     <link rel="shortcut icon" href="img/favicon.ico" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
@@ -107,6 +108,31 @@
         </div>
     </section>
 
+    <!-- Chat-->
+     <div class="wrapper">
+        <div class="chat-box">
+            <div class="chat-head">
+                <h2>Atendimento</h2>
+                <button id="setaChat"><div class="container" id="setaChat" onclick="myFunction(this)">
+  <div class="bar1"></div>
+  <div class="bar3"></div>
+</div></button>
+            </div>
+            <div class="chat-body">
+                <div class="msg-insert" id="mensagens">
+                  <!--<div class="msg-send"> Send message </div>
+                  <div class="msg-receive"> Received message </div>
+                    -->
+                </div>
+                <div class="chat-text">
+                    <textarea placeholder="Mensagem" id="inputMensagem"></textarea>
+                    <button type="button" id = "enviar" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane fa-2x"></i></button>            
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <section class="content_2">
         <div id="fugitivos" class="container-fluid">
             <h1>Muitos cachorros fogem diariamente</h1>
@@ -156,12 +182,108 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
         $(window).scroll(function() {
             $('nav').toggleClass('scrolled', $(this).scrollTop() > 250);
         });
     </script>
+           
+    <script>
+    function myFunction(x) {
+  x.classList.toggle("change");
+}
+
+
+    $(document).ready(function(){
+    $("#setaChat").click(function(){
+    $(".chat-body").slideToggle("fast");
+    $(".chat-text").slideToggle("fast");
+  });
+});
+
+    
+
+    $('#conversa').show();
+    var enviar = $('#enviar');
+    var mensagens = $('#mensagens');
+
+    enviar.click(function(){
+        enviarMensagem();
+    });
+
+    $('#inputMensagem').keyup(function(event) {
+    if(event.keyCode == 13){
+        enviarMensagem();
+        $('#inputMensagem').val("");
+        }
+
+    });
+
+
+    function enviarMensagem()
+    {
+        
+        var inputMensagem = $('#inputMensagem').val().replace("\n", "");
+            inputMensagem = inputMensagem.trim();
+                
+        if (inputMensagem !="") {
+        mensagens.append("<div class='msg-send'>"+inputMensagem+"</div>");
+        
+        chatbot(inputMensagem);
+
+        $('#inputMensagem').val("");
+
+    }
+}
+    
+
+    function chatbot(message){
+      $.ajax({
+        url: 'dialog.php?m='+message,
+        type: 'post',
+        dataType: 'text',   
+        timeout:1000,       
+        success: function(response)
+        {
+          if(response.error)
+          {
+           $('#mensagens').append('Falha na comunicação.');
+          }
+          else
+          {       
+            mensagens.append("<div class='msg-receive'>"+response+"</div>");
+          }
+          $(".chat-body").scrollTop($(".chat-body")[0].scrollHeight);
+        },
+        error: function (error)
+        {
+            $('#mensagens').append('Falha na comunicação.');
+        }   
+      });
+    }
+    //funções chat
+    $(function(){
+    var arrow = $('.chat-head img');    
+
+    arrow.on('click', function(){
+        var src = arrow.attr('src');
+
+        $('.chat-body').slideToggle('fast');
+        if(src == 'img/seta2.png'){
+            arrow.attr('src', 'img/seta.png');
+        }
+        else{
+            arrow.attr('src', 'img/seta2.png');
+        }
+    });
+
+
+    arrow.click();
+});
+    </script>
+
 </body>
 
 </html>

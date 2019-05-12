@@ -135,7 +135,7 @@ p{
 }
 
 #fugitivos{
-    background-image:url(../img/dogneo.jpg);
+    background-image:url(../img/dogneo2.jpg);
     background-repeat: no-repeat;
     background-size:cover;
     background-position:center;
@@ -158,8 +158,13 @@ p{
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.icon1{
+  border:1px solid #000000;
+}
+
 @media (max-width: 768px) {
   .content2{
     padding-right: 50px;
   }
+
 }
